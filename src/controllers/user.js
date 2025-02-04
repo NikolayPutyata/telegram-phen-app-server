@@ -3,9 +3,9 @@ import { getUserInit } from '../services/user.js';
 import createHttpError from 'http-errors';
 
 export const getInitUserController = async (req, res) => {
-  const id = req.body.id;
+  const user = req.body.user;
 
-  const userInit = await getUserInit(id);
+  const userInit = await getUserInit(user);
 
   if (!userInit) {
     throw createHttpError(404, 'User not found');
