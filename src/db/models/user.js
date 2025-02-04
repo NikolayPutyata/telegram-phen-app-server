@@ -26,7 +26,7 @@ const user = new Schema(
       type: String,
       required: true,
     },
-    friends: [{ name: 'string' }],
+    friends: [{ name: String }],
   },
   {
     timestamps: true,
@@ -34,4 +34,4 @@ const user = new Schema(
   },
 );
 
-export const UserCollection = model('initUser', user);
+export const UsersCollection = model('initUser', user);
