@@ -5,6 +5,6 @@ import { getInitUserController } from '../controllers/user.js';
 
 const router = Router();
 
-router.get('/user', ctrlWrapper(getInitUserController));
+router.get('/initUser', ctrlWrapper(getInitUserController));
 
 export default router;
