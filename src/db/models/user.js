@@ -8,11 +8,9 @@ const user = new Schema(
     },
     first_name: {
       type: String,
-      required: true,
     },
     last_name: {
       type: String,
-      required: true,
     },
     language_code: {
       type: String,
