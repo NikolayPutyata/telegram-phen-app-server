@@ -3,7 +3,7 @@ import { getUserInit } from '../services/user.js';
 import createHttpError from 'http-errors';
 
 export const getInitUserController = async (req, res) => {
-  const user = req.body.user;
+  const user = req.body;
 
   const userInit = await getUserInit(user);
 
