@@ -34,4 +34,4 @@ const user = new Schema(
   },
 );
 
-export const UsersCollection = model('initUser', user);
+export const UsersCollection = model('phenerium', user);
