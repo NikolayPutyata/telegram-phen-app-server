@@ -27,6 +27,21 @@ const user = new Schema(
     tokens: {
       type: Number,
     },
+    isFarming: {
+      type: Boolean,
+    },
+    farmStart: {
+      type: Number,
+    },
+    farmEnd: {
+      type: Number,
+    },
+    currentPrice: {
+      type: Number,
+    },
+    tempTokens: {
+      type: Number,
+    },
   },
   {
     timestamps: true,
