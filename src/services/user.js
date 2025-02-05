@@ -8,6 +8,11 @@ export const getUserInit = async (user) => {
       ...user,
       friends: [],
       tokens: 0,
+      isFarming: false,
+      farmStart: 0,
+      farmEnd: 0,
+      currentPrice: 0,
+      tempTokens: 0,
     });
     return newUser;
   }
