@@ -42,6 +42,9 @@ const user = new Schema(
     tempTokens: {
       type: Number,
     },
+    lastUpdTime: {
+      type: Number,
+    },
   },
   {
     timestamps: true,

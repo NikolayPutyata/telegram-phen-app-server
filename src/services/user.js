@@ -13,6 +13,7 @@ export const getUserInit = async (user) => {
       farmEnd: 0,
       currentPrice: 0,
       tempTokens: 0,
+      lastUpdTime: 0,
     });
     return newUser;
   }

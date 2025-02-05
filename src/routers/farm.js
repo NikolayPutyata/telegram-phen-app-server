@@ -1,14 +1,16 @@
-// import { Router } from 'express';
+import { Router } from 'express';
 
-// import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-// import {
-//   farmStartController,
-//   farmUpdateController,
-// } from '../controllers/farm.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import {
+  claimTokensController,
+  farmStartController,
+  farmUpdateController,
+} from '../controllers/farm.js';
 
-// const router = Router();
+const router = Router();
 
-// router.post('/farmStart', ctrlWrapper(farmStartController));
-// router.post('/farmUpdate', ctrlWrapper(farmUpdateController));
+router.post('/farmStart', ctrlWrapper(farmStartController));
+router.post('/farmUpdate', ctrlWrapper(farmUpdateController));
+router.post('/claimTokens', ctrlWrapper(claimTokensController));
 
-// export default router;
+export default router;

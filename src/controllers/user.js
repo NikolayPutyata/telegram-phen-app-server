@@ -14,6 +14,15 @@ export const getInitUserController = async (req, res) => {
   res.json({
     status: 200,
     message: 'Successfully found user!',
-    data: userInit,
+    data: {
+      id: userInit.id,
+      username: userInit.username,
+      first_name: userInit.first_name,
+      last_name: userInit.last_name,
+      photo_url: userInit.photo_url,
+      language_code: userInit.language_code,
+      tokens: userInit.tokens,
+      friends: userInit.friends,
+    },
   });
 };
