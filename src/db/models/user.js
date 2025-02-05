@@ -25,6 +25,9 @@ const user = new Schema(
       required: true,
     },
     friends: [{ name: String }],
+    tokens: {
+      type: Number,
+    },
   },
   {
     timestamps: true,

@@ -4,7 +4,11 @@ export const getUserInit = async (user) => {
   const userFromDB = await UsersCollection.findOne({ id: user.id });
 
   if (!userFromDB) {
-    const newUser = await UsersCollection.create(user);
+    const newUser = await UsersCollection.create({
+      ...user,
+      friends: [],
+      tokens: 0,
+    });
     return newUser;
   }
 
