@@ -23,6 +23,9 @@ export const getInitUserController = async (req, res) => {
       language_code: userInit.language_code,
       tokens: userInit.tokens,
       friends: userInit.friends,
+      skins: userInit.skins,
+      boosts: userInit.boosts,
+      activeSkins: userInit.activeSkins,
     },
   });
 };

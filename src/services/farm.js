@@ -1,6 +1,6 @@
 import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
-import { FARMING_TIME } from '../constants/index.js';
+import { FARMING_TIME, ONE_DAY } from '../constants/index.js';
 
 export const startFarming = async (id, price) => {
   const farmStart = Date.now();
@@ -120,5 +120,46 @@ export const claimTokens = async (id) => {
 
       return updUser;
     }
+  }
+};
+
+export const claimSkinsBonusService = async (id) => {
+  const user = await UsersCollection.findOne({ id });
+
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  const date = Date.now();
+
+  if (date < user.nextSkinsBonusUpdate) {
+    throw createHttpError(500, 'Bonus is not available yet!');
+  }
+  if (date > user.nextSkinsBonusUpdate) {
+    const nextSkinsBonusUpd = date + ONE_DAY;
+    const user = await UsersCollection.findOneAndUpdate(
+      { id },
+      [
+        {
+          $set: {
+            tokens: {
+              $add: [
+                '$tokens',
+                {
+                  $reduce: {
+                    input: '$activeSkins',
+                    initialValue: 0,
+                    in: { $add: ['$$value', '$$this.skin_bonus'] },
+                  },
+                },
+              ],
+            },
+            nextSkinsBonusUpdate: nextSkinsBonusUpd,
+          },
+        },
+      ],
+      { new: true },
+    );
+    return { newTokensAmount: user.tokens, nextSkinsBonusUpd };
   }
 };

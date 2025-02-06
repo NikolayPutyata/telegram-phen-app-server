@@ -45,6 +45,26 @@ const user = new Schema(
     lastUpdTime: {
       type: Number,
     },
+    skins: [
+      { id: Number, name: String, skin_photo_url: String, skin_bonus: Number },
+    ],
+    boosts: [
+      {
+        id: Number,
+        name: String,
+        boost_photo_url: String,
+        boost_bonus: Number,
+      },
+    ],
+    activeSkins: [
+      {
+        id: Number,
+        name: String,
+        skin_photo_url: String,
+        skin_bonus: Number,
+      },
+    ],
+    nextSkinsBonusUpdate: { type: Number },
   },
   {
     timestamps: true,
