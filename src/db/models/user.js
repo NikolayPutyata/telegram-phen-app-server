@@ -36,13 +36,7 @@ const user = new Schema(
     farmEnd: {
       type: Number,
     },
-    currentPrice: {
-      type: Number,
-    },
-    tempTokens: {
-      type: Number,
-    },
-    lastUpdTime: {
+    currentBoost: {
       type: Number,
     },
     skins: [
