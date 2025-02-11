@@ -10,7 +10,7 @@ bot.start(async (ctx) => {
   const friendId = ctx.from.id;
   const firstName = ctx.from.first_name;
   const messageText = ctx.message?.text || '';
-  const userId = messageText.split(' ')[1]; // Берём всё после "/start"
+  const userId = messageText.split(' ')[1];
 
   await addFriendToUserService(userId, friendId, firstName);
 
