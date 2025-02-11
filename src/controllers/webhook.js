@@ -1,3 +1,4 @@
+import { addFriendToUserService } from '../services/webhook.js';
 import { bot } from '../utils/initTgBot.js';
 
 export const botController = async (req, res) => {
@@ -5,10 +6,13 @@ export const botController = async (req, res) => {
   res.sendStatus(200);
 };
 
-// Обработчики команд
-bot.start((ctx) => {
+bot.start(async (ctx) => {
+  const friendId = ctx.from.id;
+  const firstName = ctx.from.first_name;
   const messageText = ctx.message?.text || '';
-  const refCode = messageText.split(' ')[1]; // Берём всё после "/start"
+  const userId = messageText.split(' ')[1]; // Берём всё после "/start"
 
-  ctx.reply(refCode ? `Твой рефкод: ${refCode}` : 'Привет! Без рефкода.');
+  await addFriendToUserService(userId, friendId, firstName);
+
+  ctx.reply('Hello in Phenerium!');
 });
