@@ -1,4 +1,4 @@
-import { UsersCollection } from '../db/models/user';
+import { UsersCollection } from '../db/models/user.js';
 
 export const addFriendToUserService = async (userId, friendId, firstName) => {
   await UsersCollection.findOneAndUpdate(
