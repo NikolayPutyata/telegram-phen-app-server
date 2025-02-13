@@ -59,6 +59,36 @@ const user = new Schema(
       },
     ],
     nextSkinsBonusUpdate: { type: Number },
+    completedTasks: [{ id: Number, task: String }],
+    usersTasks: {
+      gaming: [
+        {
+          id: Number,
+          name: String,
+          svgUrl: String,
+          taskBonus: Number,
+          completed: Boolean,
+        },
+      ],
+      partners: [
+        {
+          id: Number,
+          name: String,
+          svgUrl: String,
+          taskBonus: Number,
+          completed: Boolean,
+        },
+      ],
+      special: [
+        {
+          id: Number,
+          name: String,
+          svgUrl: String,
+          taskBonus: Number,
+          completed: Boolean,
+        },
+      ],
+    },
   },
   {
     timestamps: true,
