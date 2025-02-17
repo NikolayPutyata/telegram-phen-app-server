@@ -26,3 +26,9 @@ export const getUserInit = async (user) => {
 
   return userFromDB;
 };
+
+export const getUserFriends = async (id) => {
+  const userFromDB = await UsersCollection.findOne({ id: id });
+
+  return userFromDB.friends.length;
+};

@@ -1,4 +1,4 @@
-import { getUserInit } from '../services/user.js';
+import { getUserFriends, getUserInit } from '../services/user.js';
 import createHttpError from 'http-errors';
 
 export const getInitUserController = async (req, res) => {
@@ -29,4 +29,12 @@ export const getInitUserController = async (req, res) => {
       usersTasks: userInit.usersTasks,
     },
   });
+};
+
+export const getUsersFriendsController = async (req, res) => {
+  const userId = req.body.id;
+
+  const friends = await getUserFriends(userId);
+
+  res.status(200).json({ data: friends });
 };
