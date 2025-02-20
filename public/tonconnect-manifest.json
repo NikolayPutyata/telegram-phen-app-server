@@ -1,5 +1,8 @@
 {
-  "url": "https://telegram-phen-app-server-scjhs.ondigitalocean.app",
   "name": "Phenerium Mini App",
-  "iconUrl": "https://res.cloudinary.com/dv1acgeyp/image/upload/v1740052228/Frame_40_k5bhwv.png"
+  "description": "Phenerium - step in future.",
+  "url": "https://telegram-phen-app-server-scjhs.ondigitalocean.app",
+  "icons": [
+    "https://res.cloudinary.com/dv1acgeyp/image/upload/v1740052228/Frame_40_k5bhwv.png"
+  ]
 }
