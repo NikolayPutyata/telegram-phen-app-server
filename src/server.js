@@ -23,6 +23,8 @@ export const setupServer = async () => {
     }),
   );
 
+  app.use(express.static('public'));
+
   app.use(router);
 
   app.use('*', notFoundHandler);
