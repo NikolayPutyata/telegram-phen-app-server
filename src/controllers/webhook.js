@@ -2,8 +2,9 @@ import { addFriendToUserService } from '../services/webhook.js';
 import { bot } from '../utils/initTgBot.js';
 
 export const botController = async (req, res) => {
+  console.log(req.body);
+
   await bot.handleUpdate(req.body);
-  res.sendStatus(200);
 
   // Обработка команды /start
   bot.start(async (ctx) => {
@@ -17,7 +18,7 @@ export const botController = async (req, res) => {
   });
 
   // Обработка текстовых сообщений (данных от мини-приложения)
-  bot.on('text', async (ctx) => {
+  bot.use('text', async (ctx) => {
     try {
       const data = JSON.parse(ctx.message.text); // Парсим JSON от tg.sendData
       console.log('Получены данные от мини-приложения:', data);
@@ -52,9 +53,11 @@ export const botController = async (req, res) => {
   });
 
   // Обработка успешной оплаты
-  bot.on('successful_payment', async (ctx) => {
+  bot.use('successful_payment', async (ctx) => {
     const payment = ctx.message.successful_payment;
     console.log('Успешная оплата:', payment);
     await ctx.reply(`Спасибо за покупку "${payment.invoice_payload}"!`);
   });
+
+  res.sendStatus(200);
 };
