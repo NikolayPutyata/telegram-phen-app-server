@@ -1,4 +1,7 @@
-import { successPaymentService } from '../services/payments.js';
+import {
+  formTransactionService,
+  successPaymentService,
+} from '../services/payments.js';
 
 export const paymentSuccessController = async (req, res) => {
   const data = req.body;
@@ -20,4 +23,17 @@ export const paymentSuccessController = async (req, res) => {
   const user = await successPaymentService(transactionId, sender, memo);
 
   res.status(200).json({ id: user.id });
+};
+
+export const formTransactionController = async (req, res) => {
+  const { userId, idCollection, idItem, amount } = req.body;
+
+  const transaction = await formTransactionService(
+    userId,
+    idCollection,
+    idItem,
+    amount,
+  );
+
+  res.status(200).json({ data: transaction });
 };
