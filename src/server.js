@@ -13,13 +13,7 @@ export const setupServer = async () => {
   const app = express();
 
   app.use(express.json());
-  app.use(
-    cors({
-      origin: 'https://telegram-phen-app.vercel.app',
-      methods: ['GET', 'POST', 'OPTIONS'],
-      allowedHeaders: ['Content-Type'],
-    }),
-  );
+  app.use(cors());
 
   app.use(
     pino({
