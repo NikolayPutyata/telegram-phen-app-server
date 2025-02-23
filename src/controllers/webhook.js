@@ -13,27 +13,23 @@ bot.start(async (ctx) => {
   await ctx.reply('Hello in Phenerium!');
 });
 
-bot.on('callback_query', async (ctx) => {
-  try {
-    const data = JSON.parse(ctx.callbackQuery.data); // Получаем данные от Mini App
-    console.log('Распарсенные данные:', data);
+bot.on('message', async (ctx) => {
+  const data = JSON.parse(ctx.message.text);
+  console.log('✅ Распарсенные данные:', data);
 
-    if (data.action === 'pay' && data.chat_id) {
-      console.log('Отправляем счет на chat_id:', data.chat_id);
-      await bot.telegram.sendInvoice(data.chat_id, {
-        title: data.title,
-        description: data.description,
-        payload: data.payload,
-        provider_token: '',
-        currency: 'XTR',
-        prices: data.prices,
-      });
-      console.log('Счет отправлен');
-    } else {
-      console.log("Нет chat_id или action !== 'pay'");
-    }
-  } catch (error) {
-    console.error('Ошибка обработки данных:', error);
+  if (data.action === 'pay' && data.chat_id) {
+    console.log('💰 Отправляем счёт на chat_id:', data.chat_id);
+    await bot.telegram.sendInvoice(data.chat_id, {
+      title: data.title,
+      description: data.description,
+      payload: data.payload,
+      provider_token: '', // Вставь свой токен
+      currency: 'XTR',
+      prices: data.prices,
+    });
+    console.log('🧾 Счет отправлен!');
+  } else {
+    console.log("❌ Нет chat_id или action !== 'pay'");
   }
 });
 
