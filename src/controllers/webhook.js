@@ -2,12 +2,11 @@ import { addFriendToUserService } from '../services/webhook.js';
 import { bot } from '../utils/initTgBot.js';
 
 export const botController = async (req, res) => {
-  console.log(req.body);
-
   await bot.handleUpdate(req.body);
 
   // Обработка команды /start
   bot.start(async (ctx) => {
+    console.log(ctx.message);
     const friendId = ctx.from.id;
     const firstName = ctx.from.first_name;
     const messageText = ctx.message?.text || '';
@@ -19,44 +18,23 @@ export const botController = async (req, res) => {
 
   // Обработка текстовых сообщений (данных от мини-приложения)
   bot.use('text', async (ctx) => {
-    try {
-      const data = JSON.parse(ctx.message.text); // Парсим JSON от tg.sendData
-      console.log('Получены данные от мини-приложения:', data);
+    console.log('Получен текст:', ctx.message.text);
 
-      if (data.action === 'pay') {
-        // Отправляем счет пользователю
-        await ctx.replyWithInvoice({
-          chat_id: ctx.chat.id,
-          title: data.title,
-          description: data.description,
-          payload: data.payload, // Уникальный идентификатор заказа
-          provider_token: '', // Для Stars оставляем пустым
-          currency: 'XTR', // Валюта Telegram Stars
-          prices: data.prices, // [{ label: 'Price', amount: 100 }]
-        });
-      }
-    } catch (error) {
-      console.error('Ошибка обработки данных:', error);
-      await ctx.reply('Произошла ошибка при обработке вашего запроса.');
+    const data = JSON.parse(ctx.message.text);
+    console.log('Распарсенные данные:', data);
+
+    if (data.action === 'pay' && data.chat_id) {
+      console.log('Отправляем счет на chat_id:', data.chat_id);
+      await bot.telegram.sendInvoice(data.chat_id, {
+        title: data.title,
+        description: data.description,
+        payload: data.payload,
+        provider_token: '',
+        currency: 'XTR',
+        prices: data.prices,
+      });
+      console.log('Счет отправлен');
     }
-  });
-
-  // Обработка предпроверки оплаты
-  bot.on('pre_checkout_query', async (ctx) => {
-    try {
-      console.log('Предпроверка оплаты:', ctx.preCheckoutQuery);
-      await ctx.answerPreCheckoutQuery(true); // Подтверждаем оплату
-    } catch (error) {
-      console.error('Ошибка предпроверки:', error);
-      await ctx.answerPreCheckoutQuery(false, 'Ошибка при проверке оплаты');
-    }
-  });
-
-  // Обработка успешной оплаты
-  bot.use('successful_payment', async (ctx) => {
-    const payment = ctx.message.successful_payment;
-    console.log('Успешная оплата:', payment);
-    await ctx.reply(`Спасибо за покупку "${payment.invoice_payload}"!`);
   });
 
   res.sendStatus(200);
