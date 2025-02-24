@@ -31,7 +31,7 @@ export const successPaymentService = async (memo) => {
     return user;
   }
   if (collectionId === 2) {
-    const boost = await BoostsCollection.findOne({ id: itemId });
+    const boost = await BoostsCollection.findOne({ idItem: itemId });
 
     if (!boost) {
       throw createHttpError(404, 'Boost not found!');
