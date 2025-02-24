@@ -5,6 +5,7 @@ import createHttpError from 'http-errors';
 import { beginCell } from '@ton/ton';
 import { toNano } from '@ton/ton';
 import { env } from '../utils/env.js';
+import { bot } from '../utils/initTgBot.js';
 
 export const successPaymentService = async (transactionId, sender, memo) => {
   const parts = memo.split('_');
@@ -75,4 +76,27 @@ export const formTransactionService = async (
   };
 
   return transaction;
+};
+
+export const createStarInvoiceService = async (
+  title,
+  description,
+  payload,
+  currency,
+  prices,
+) => {
+  const invoice = await bot.telegram.createInvoiceLink({
+    title,
+    description,
+    payload,
+    currency,
+    prices,
+    need_name: false,
+    need_phone_number: false,
+    need_email: false,
+    need_shipping_address: false,
+    is_flexible: false,
+  });
+
+  return invoice;
 };

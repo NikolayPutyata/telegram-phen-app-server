@@ -1,4 +1,5 @@
 import {
+  createStarInvoiceService,
   formTransactionService,
   successPaymentService,
 } from '../services/payments.js';
@@ -36,4 +37,18 @@ export const formTransactionController = async (req, res) => {
   );
 
   res.status(200).json({ data: transaction });
+};
+
+export const createStarInvoiceController = async (req, res) => {
+  const { title, description, payload, currency, prices } = req.body;
+
+  const invoiceLink = await createStarInvoiceService(
+    title,
+    description,
+    payload,
+    currency,
+    prices,
+  );
+
+  res.status(200).json({ data: invoiceLink });
 };
