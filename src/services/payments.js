@@ -6,8 +6,9 @@ import { beginCell } from '@ton/ton';
 import { toNano } from '@ton/ton';
 import { env } from '../utils/env.js';
 import { bot } from '../utils/initTgBot.js';
+import axios from 'axios';
 
-export const successPaymentService = async (transactionId, sender, memo) => {
+export const successPaymentService = async (memo) => {
   const parts = memo.split('_');
 
   const userId = Number(parts[1]);
@@ -99,4 +100,16 @@ export const createStarInvoiceService = async (
   });
 
   return invoice;
+};
+
+export const takeFullInfoAboutTransaction = async (hash) => {
+  const data = await axios.get(
+    `${env('TONAPI_URL')}/blockchain/transactions/${hash}`,
+    {
+      headers: { Authorization: `Bearer ${env('TONAPI_KEY')}` },
+    },
+  );
+
+  const memo = data.data.in_msg.decoded_body.text;
+  return memo;
 };

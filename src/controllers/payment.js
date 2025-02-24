@@ -1,15 +1,15 @@
 import {
   createStarInvoiceService,
   formTransactionService,
-  // successPaymentService,
+  takeFullInfoAboutTransaction,
+  successPaymentService,
 } from '../services/payments.js';
 
 export const paymentSuccessController = async (req, res) => {
   const data = req.body;
 
-  console.log(data);
-
-  // const user = await successPaymentService(transactionId, sender, memo);
+  const memo = await takeFullInfoAboutTransaction(data.tx_hash);
+  await successPaymentService(memo);
 
   res.status(200).send('OK');
 };

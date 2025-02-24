@@ -2,7 +2,7 @@ import { model, Schema } from 'mongoose';
 
 const boosts = new Schema(
   {
-    id: {
+    idItem: {
       type: Number,
       required: true,
     },
@@ -15,6 +15,17 @@ const boosts = new Schema(
     },
     boost_bonus: {
       type: Number,
+      required: true,
+    },
+    collectionId: {
+      type: Number,
+      required: true,
+    },
+    desc: {
+      type: String,
+    },
+    price: {
+      type: String,
       required: true,
     },
   },
