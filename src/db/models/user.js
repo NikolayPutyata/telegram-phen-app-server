@@ -23,7 +23,7 @@ const user = new Schema(
     username: {
       type: String,
     },
-    friends: [{ id: Number, name: String }],
+    friends: [{ id: Number, name: String, photo: String }],
     tokens: {
       type: Number,
     },

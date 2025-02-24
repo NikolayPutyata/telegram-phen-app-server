@@ -4,10 +4,11 @@ import { bot } from '../utils/initTgBot.js';
 bot.start(async (ctx) => {
   const friendId = ctx.from.id;
   const firstName = ctx.from.first_name;
+  const photo = ctx.from.photo_url;
   const messageText = ctx.message?.text || '';
   const userId = messageText.split(' ')[1];
 
-  await addFriendToUserService(userId, friendId, firstName);
+  await addFriendToUserService(userId, friendId, firstName, photo);
   await ctx.reply('Hello in Phenerium!');
 });
 

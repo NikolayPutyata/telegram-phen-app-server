@@ -1,6 +1,11 @@
 import { UsersCollection } from '../db/models/user.js';
 
-export const addFriendToUserService = async (userId, friendId, firstName) => {
+export const addFriendToUserService = async (
+  userId,
+  friendId,
+  firstName,
+  photo,
+) => {
   if (userId === Number(friendId)) {
     return;
   }
@@ -19,13 +24,16 @@ export const addFriendToUserService = async (userId, friendId, firstName) => {
             friends: {
               $cond: {
                 if: {
-                  $in: [{ id: Number(friendId), name: firstName }, '$friends'],
+                  $in: [
+                    { id: Number(friendId), name: firstName, photo: photo },
+                    '$friends',
+                  ],
                 },
                 then: '$friends',
                 else: {
                   $concatArrays: [
                     '$friends',
-                    [{ id: Number(friendId), name: firstName }],
+                    [{ id: Number(friendId), name: firstName, photo: photo }],
                   ],
                 },
               },
@@ -33,7 +41,10 @@ export const addFriendToUserService = async (userId, friendId, firstName) => {
             tokens: {
               $cond: {
                 if: {
-                  $in: [{ id: Number(friendId), name: firstName }, '$friends'],
+                  $in: [
+                    { id: Number(friendId), name: firstName, photo: photo },
+                    '$friends',
+                  ],
                 },
                 then: '$tokens',
                 else: { $add: ['$tokens', 500] },
