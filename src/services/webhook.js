@@ -24,16 +24,13 @@ export const addFriendToUserService = async (
             friends: {
               $cond: {
                 if: {
-                  $in: [
-                    { id: Number(friendId), name: firstName, photo: photo },
-                    '$friends',
-                  ],
+                  $in: [{ id: Number(friendId), name: firstName }, '$friends'],
                 },
                 then: '$friends',
                 else: {
                   $concatArrays: [
                     '$friends',
-                    [{ id: Number(friendId), name: firstName, photo: photo }],
+                    [{ id: Number(friendId), name: firstName }],
                   ],
                 },
               },
@@ -41,10 +38,7 @@ export const addFriendToUserService = async (
             tokens: {
               $cond: {
                 if: {
-                  $in: [
-                    { id: Number(friendId), name: firstName, photo: photo },
-                    '$friends',
-                  ],
+                  $in: [{ id: Number(friendId), name: firstName }, '$friends'],
                 },
                 then: '$tokens',
                 else: { $add: ['$tokens', 500] },
