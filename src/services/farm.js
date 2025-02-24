@@ -33,7 +33,7 @@ export const startFarming = async (id, boostsIdsArray) => {
   }
 
   const matchedBoosts = user.boosts.filter((boost) =>
-    boostsIdsArray.includes(boost.id),
+    boostsIdsArray.includes(boost.idItem),
   );
 
   if (matchedBoosts.length !== boostsIdsArray.length) {
@@ -47,7 +47,7 @@ export const startFarming = async (id, boostsIdsArray) => {
     );
 
     const remainingBoosts = user.boosts.filter(
-      (boost) => !boostsIdsArray.includes(boost.id),
+      (boost) => !boostsIdsArray.includes(boost.idItem),
     );
 
     const userUpd = await UsersCollection.findOneAndUpdate(
@@ -75,7 +75,13 @@ export const claimTokens = async (id) => {
     throw createHttpError(404, 'User not found');
   }
 
-  if (Date.now() > user.farmEnd) {
+  const dateNow = Date.now();
+
+  if (dateNow < user.farmEnd) {
+    throw createHttpError(500, 'Farm not end now!');
+  }
+
+  if (dateNow > user.farmEnd) {
     const tokens =
       user.currentBoost === 0
         ? TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_8_HOURS

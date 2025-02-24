@@ -49,7 +49,7 @@ export const successPaymentService = async (memo) => {
   return { message: 'Unknown collection!' };
 };
 
-// memo ex : ORDER_3423432_1_32
+// memo ex : ORDER_3423432_2_32
 // перше число - id юзера, друге - id колекції (1 - скіни, 2 - бусти, 3 - пресейл), третє - id кокретного бонуса в колекції
 
 // ОБРОБКА ПРЕСЕЙЛУ!!!!
