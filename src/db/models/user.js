@@ -44,10 +44,13 @@ const user = new Schema(
     ],
     boosts: [
       {
-        id: Number,
+        idItem: Number,
         name: String,
         boost_photo_url: String,
         boost_bonus: Number,
+        collectionId: Number,
+        desc: String,
+        price: String,
       },
     ],
     activeSkins: [
