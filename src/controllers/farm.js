@@ -5,7 +5,7 @@ import {
 } from '../services/farm.js';
 
 export const farmStartController = async (req, res) => {
-  const boostsIdsArray = req.body.boostsIds; // boostsIdsArray - масив id бустів
+  const boostsIdsArray = req.body.boostsIds;
   const id = req.body.id;
 
   const user = await startFarming(id, boostsIdsArray);
@@ -13,6 +13,8 @@ export const farmStartController = async (req, res) => {
   res.status(200).json({
     isFarmingStart: user.isFarming,
     farmingEnd: user.farmEnd,
+    activeBoosts: user.activeBoosts,
+    boosts: user.boosts,
   });
 };
 

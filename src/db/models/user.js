@@ -61,6 +61,17 @@ const user = new Schema(
         skin_bonus: Number,
       },
     ],
+    activeBoosts: [
+      {
+        idItem: Number,
+        name: String,
+        boost_photo_url: String,
+        boost_bonus: Number,
+        collectionId: Number,
+        desc: String,
+        price: String,
+      },
+    ],
     nextSkinsBonusUpdate: { type: Number },
     usersTasks: {
       gaming: [

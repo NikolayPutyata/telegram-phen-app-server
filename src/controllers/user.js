@@ -27,6 +27,7 @@ export const getInitUserController = async (req, res) => {
       activeSkins: userInit.activeSkins,
       currentBoost: userInit.currentBoost,
       usersTasks: userInit.usersTasks,
+      activeBoosts: userInit.activeBoosts,
     },
   });
 };

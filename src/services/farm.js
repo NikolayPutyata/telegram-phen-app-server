@@ -49,6 +49,9 @@ export const startFarming = async (id, boostsIdsArray) => {
     const remainingBoosts = user.boosts.filter(
       (boost) => !boostsIdsArray.includes(boost.idItem),
     );
+    const currentActiveBoosts = user.boosts.filter((boost) =>
+      boostsIdsArray.includes(boost.idItem),
+    );
 
     const userUpd = await UsersCollection.findOneAndUpdate(
       { id },
@@ -59,6 +62,7 @@ export const startFarming = async (id, boostsIdsArray) => {
           currentBoost: boostBonusSum,
           isFarming: true,
           boosts: remainingBoosts,
+          activeBoosts: currentActiveBoosts,
         },
       },
       { new: true },
@@ -97,6 +101,7 @@ export const claimTokens = async (id) => {
             farmStart: 0,
             farmEnd: 0,
             isFarming: false,
+            activeBoosts: [],
           },
         },
       ],
