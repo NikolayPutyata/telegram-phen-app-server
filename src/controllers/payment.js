@@ -11,7 +11,7 @@ export const paymentSuccessController = async (req, res) => {
 
   // const user = await successPaymentService(transactionId, sender, memo);
 
-  res.status(200);
+  res.status(200).send('OK');
 };
 
 export const formTransactionController = async (req, res) => {
