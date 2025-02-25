@@ -6,7 +6,7 @@ export const farmStartSchema = Joi.object({
     'number.integer': 'id must be an integer',
     'any.required': 'id is required',
   }),
-  boostsIdsArray: Joi.array()
+  boostsIds: Joi.array()
     .items(
       Joi.number().integer().messages({
         'number.base': 'each boost ID must be a number',
@@ -15,8 +15,8 @@ export const farmStartSchema = Joi.object({
     )
     .required()
     .messages({
-      'array.base': 'boostsIdsArray must be an array',
-      'any.required': 'boostsIdsArray is required',
+      'array.base': 'boostsIds must be an array',
+      'any.required': 'boostsIds is required',
     }),
 });
 
