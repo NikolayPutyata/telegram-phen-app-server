@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   createStarInvoiceController,
   formTransactionController,
@@ -8,8 +7,8 @@ import {
 
 const router = Router();
 
-router.post('/payment-success', ctrlWrapper(paymentSuccessController));
-router.post('/form-transaction', ctrlWrapper(formTransactionController));
-router.post('/create-star-invoice', ctrlWrapper(createStarInvoiceController));
+router.post('/payment-success', paymentSuccessController);
+router.post('/form-transaction', formTransactionController);
+router.post('/create-star-invoice', createStarInvoiceController);
 
 export default router;
