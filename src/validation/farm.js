@@ -20,15 +20,7 @@ export const farmStartSchema = Joi.object({
     }),
 });
 
-export const claimTokensSchema = Joi.object({
-  id: Joi.number().integer().required().messages({
-    'number.base': 'id must be a number',
-    'number.integer': 'id must be an integer',
-    'any.required': 'id is required',
-  }),
-});
-
-export const claimSkinsBonusSchema = Joi.object({
+export const claimSchema = Joi.object({
   id: Joi.number().integer().required().messages({
     'number.base': 'id must be a number',
     'number.integer': 'id must be an integer',

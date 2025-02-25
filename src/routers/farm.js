@@ -6,11 +6,7 @@ import {
   farmStartController,
   claimSkinsBonusController,
 } from '../controllers/farm.js';
-import {
-  farmStartSchema,
-  claimTokensSchema,
-  claimSkinsBonusSchema,
-} from '../validation/farm.js';
+import { farmStartSchema, claimSchema } from '../validation/farm.js';
 
 const router = Router();
 
@@ -21,12 +17,12 @@ router.post(
 );
 router.post(
   '/claimTokens',
-  validateBody(claimTokensSchema),
+  validateBody(claimSchema),
   ctrlWrapper(claimTokensController),
 );
 router.post(
   '/claimSkinsBonus',
-  validateBody(claimSkinsBonusSchema),
+  validateBody(claimSchema),
   ctrlWrapper(claimSkinsBonusController),
 );
 
