@@ -6,10 +6,19 @@ import {
   getInitUserController,
   getUsersFriendsController,
 } from '../controllers/user.js';
+import { initUserSchema, getFriendsSchema } from '../validation/users.js';
 
 const router = Router();
 
-router.post('/initUser', ctrlWrapper(getInitUserController));
-router.post('/getFriends', ctrlWrapper(getUsersFriendsController));
+router.post(
+  '/initUser',
+  validateBody(initUserSchema),
+  ctrlWrapper(getInitUserController),
+);
+router.post(
+  '/getFriends',
+  validateBody(getFriendsSchema),
+  ctrlWrapper(getUsersFriendsController),
+);
 
 export default router;
