@@ -23,9 +23,11 @@ export const claimTokensController = async (req, res) => {
 
   const user = await claimTokens(id);
 
-  res
-    .status(200)
-    .json({ message: 'Download completed successfully!', tokens: user.tokens });
+  res.status(200).json({
+    message: 'Download completed successfully!',
+    tokens: user.tokens,
+    activeBoosts: user.activeBoosts,
+  });
 };
 
 export const claimSkinsBonusController = async (req, res) => {
