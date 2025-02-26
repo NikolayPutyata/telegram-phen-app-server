@@ -17,6 +17,14 @@ export const startFarming = async (id, boostsIdsArray) => {
   const farmStart = Date.now();
   const farmEnd = farmStart + user.farmingCycle * 60 * 60 * 1000;
 
+  const BASE_TOKENS = {
+    8: TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_8_HOURS,
+    12: TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_12_HOURS,
+    24: TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_24_HOURS,
+  };
+
+  const baseTokens = BASE_TOKENS[user.farmingCycle];
+
   if (boostsIdsArray.length === 0) {
     const userUpd = await UsersCollection.findOneAndUpdate(
       { id },
@@ -25,6 +33,7 @@ export const startFarming = async (id, boostsIdsArray) => {
           farmStart,
           farmEnd,
           isFarming: true,
+          tempTokens: baseTokens,
         },
       },
       { new: true },
@@ -64,6 +73,7 @@ export const startFarming = async (id, boostsIdsArray) => {
           isFarming: true,
           boosts: remainingBoosts,
           activeBoosts: currentActiveBoosts,
+          tempTokens: baseTokens * boostBonusSum,
         },
       },
       { new: true },

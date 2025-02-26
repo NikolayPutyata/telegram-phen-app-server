@@ -21,6 +21,7 @@ export const getUserInit = async (user) => {
       nextSkinsBonusUpdate: 0,
       activeBoosts: [],
       farmingCycle: 8,
+      tempTokens: 0,
       usersTasks: { ...tasksData.toObject().tasks },
     });
     return newUser;

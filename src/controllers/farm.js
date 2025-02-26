@@ -15,6 +15,8 @@ export const farmStartController = async (req, res) => {
     farmingEnd: user.farmEnd,
     activeBoosts: user.activeBoosts,
     boosts: user.boosts,
+    tokensToGet: user.tempTokens,
+    farmingCycle: user.farmingCycle,
   });
 };
 

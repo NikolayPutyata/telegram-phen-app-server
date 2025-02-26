@@ -105,6 +105,9 @@ const user = new Schema(
     farmingCycle: {
       type: Number,
     },
+    tempTokens: {
+      type: Number,
+    },
   },
   {
     timestamps: true,
