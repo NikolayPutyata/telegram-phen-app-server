@@ -1,3 +1,4 @@
+import { successPaymentService } from '../services/payments.js';
 import { addFriendToUserService } from '../services/webhook.js';
 import { bot } from '../utils/initTgBot.js';
 
@@ -16,9 +17,7 @@ bot.on('pre_checkout_query', async (ctx) => {
 });
 
 bot.on('successful_payment', async (ctx) => {
-  await ctx.reply(
-    `Спасибо за покупку "${ctx.message.successful_payment.invoice_payload}"!`,
-  );
+  await successPaymentService(ctx.message.successful_payment.invoice_payload);
 });
 
 export const botController = async (req, res) => {

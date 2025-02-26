@@ -1,20 +1,21 @@
 import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
 import {
-  FARMING_TIME,
   ONE_DAY,
   TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_8_HOURS,
+  TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_12_HOURS,
+  TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_24_HOURS,
 } from '../constants/index.js';
 
 export const startFarming = async (id, boostsIdsArray) => {
-  const farmStart = Date.now();
-  const farmEnd = farmStart + FARMING_TIME;
-
   const user = await UsersCollection.findOne({ id });
 
   if (!user) {
     throw new Error('User Not Found!');
   }
+
+  const farmStart = Date.now();
+  const farmEnd = farmStart + user.farmingCycle * 60 * 60 * 1000;
 
   if (boostsIdsArray.length === 0) {
     const userUpd = await UsersCollection.findOneAndUpdate(
@@ -86,10 +87,16 @@ export const claimTokens = async (id) => {
   }
 
   if (dateNow > user.farmEnd) {
+    const BASE_TOKENS = {
+      8: TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_8_HOURS,
+      12: TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_12_HOURS,
+      24: TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_24_HOURS,
+    };
+
+    const baseTokens = BASE_TOKENS[user.farmingCycle];
+
     const tokens =
-      user.currentBoost === 0
-        ? TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_8_HOURS
-        : user.currentBoost * TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_8_HOURS;
+      user.currentBoost > 0 ? user.currentBoost * baseTokens : baseTokens;
 
     const updUser = await UsersCollection.findOneAndUpdate(
       { id: id },

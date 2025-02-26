@@ -45,12 +45,26 @@ export const successPaymentService = async (memo) => {
 
     return user;
   }
+  if (collectionId === 5 && itemId === 5) {
+    await UsersCollection.findOneAndUpdate(
+      { id: userId },
+      { farmingCycle: 12 },
+      { new: true },
+    );
+  }
+  if (collectionId === 5 && itemId === 6) {
+    await UsersCollection.findOneAndUpdate(
+      { id: userId },
+      { farmingCycle: 24 },
+      { new: true },
+    );
+  }
 
   return { message: 'Unknown collection!' };
 };
 
 // memo ex : ORDER_3423432_2_32
-// перше число - id юзера, друге - id колекції (1 - скіни, 2 - бусти, 3 - пресейл), третє - id кокретного бонуса в колекції
+// перше число - id юзера, друге - id колекції (1 - скіни, 2 - бусти, 3 - пресейл, 4 - кейси, 5 - боти), третє - id кокретного бонуса в колекції
 
 // ОБРОБКА ПРЕСЕЙЛУ!!!!
 
