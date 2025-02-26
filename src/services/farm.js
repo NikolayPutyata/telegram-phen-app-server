@@ -108,6 +108,7 @@ export const claimTokens = async (id) => {
             farmEnd: 0,
             isFarming: false,
             activeBoosts: [],
+            tempTokens: 0,
           },
         },
       ],
