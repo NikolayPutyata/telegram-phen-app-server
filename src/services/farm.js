@@ -97,23 +97,12 @@ export const claimTokens = async (id) => {
   }
 
   if (dateNow > user.farmEnd) {
-    const BASE_TOKENS = {
-      8: TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_8_HOURS,
-      12: TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_12_HOURS,
-      24: TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_24_HOURS,
-    };
-
-    const baseTokens = BASE_TOKENS[user.farmingCycle];
-
-    const tokens =
-      user.currentBoost > 0 ? user.currentBoost * baseTokens : baseTokens;
-
     const updUser = await UsersCollection.findOneAndUpdate(
       { id: id },
       [
         {
           $set: {
-            tokens: Number((user.tokens + tokens).toFixed(1)),
+            tokens: Number((user.tokens + user.tempTokens).toFixed(1)),
             currentBoost: 0,
             farmStart: 0,
             farmEnd: 0,
