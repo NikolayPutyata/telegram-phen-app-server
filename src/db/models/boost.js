@@ -1,31 +1,49 @@
 import { model, Schema } from 'mongoose';
 
-const boosts = new Schema(
+const boostSchema = new Schema({
+  idItem: {
+    type: Number,
+    required: true,
+  },
+  name: {
+    type: String,
+  },
+  boost_photo_url: {
+    type: String,
+    required: true,
+  },
+  boost_bonus: {
+    type: Number,
+    required: true,
+  },
+  collectionId: {
+    type: Number,
+    required: true,
+  },
+  desc: {
+    type: String,
+  },
+  price: {
+    type: String,
+    required: true,
+  },
+});
+
+const categorySchema = new Schema({
+  common: {
+    type: [boostSchema],
+    default: [],
+  },
+  special: {
+    type: [boostSchema],
+    default: [],
+  },
+});
+
+const boostsCollectionSchema = new Schema(
   {
-    idItem: {
-      type: Number,
-      required: true,
-    },
-    name: {
-      type: String,
-    },
-    boost_photo_url: {
-      type: String,
-      required: true,
-    },
-    boost_bonus: {
-      type: Number,
-      required: true,
-    },
-    collectionId: {
-      type: Number,
-      required: true,
-    },
-    desc: {
-      type: String,
-    },
-    price: {
-      type: String,
+    boosts: {
+      type: [categorySchema],
       required: true,
     },
   },
@@ -35,4 +53,4 @@ const boosts = new Schema(
   },
 );
 
-export const BoostsCollection = model('boosts', boosts);
+export const BoostsCollection = model('boosts', boostsCollectionSchema);
