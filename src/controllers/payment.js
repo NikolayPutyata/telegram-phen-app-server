@@ -3,6 +3,7 @@ import {
   formTransactionService,
   takeFullInfoAboutTransaction,
   successPaymentService,
+  writeOffTokensInPhenerium,
 } from '../services/payments.js';
 
 export const paymentSuccessController = async (req, res) => {
@@ -39,4 +40,16 @@ export const createStarInvoiceController = async (req, res) => {
   );
 
   res.status(200).json({ data: invoiceLink });
+};
+
+export const paymentInPheneriumController = async (req, res) => {
+  const amount = req.body.amount;
+  const memo = req.body.memo;
+
+  await writeOffTokensInPhenerium(amount, memo);
+  const user = await successPaymentService(memo);
+
+  res.status(200).json({
+    data: { tokens: user.tokens, skins: user.skins, boosts: user.boosts },
+  });
 };

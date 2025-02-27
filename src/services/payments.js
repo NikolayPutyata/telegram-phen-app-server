@@ -133,3 +133,24 @@ export const takeFullInfoAboutTransaction = async (hash) => {
   const memo = data.data.in_msg.decoded_body.text;
   return memo;
 };
+
+export const writeOffTokensInPhenerium = async (amount, memo) => {
+  const parts = memo.split('_');
+
+  const userId = Number(parts[1]);
+
+  const user = await UsersCollection.findOne({ id: userId });
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+  if (user.tokens < amount) {
+    throw createHttpError(400, 'Insufficient tokens');
+  }
+
+  await UsersCollection.findOneAndUpdate(
+    { id: userId },
+    { $inc: { tokens: -amount } },
+    { new: true },
+  );
+
+};
