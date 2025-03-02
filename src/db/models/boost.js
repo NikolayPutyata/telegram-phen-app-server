@@ -27,6 +27,9 @@ const boostSchema = new Schema({
     type: String,
     required: true,
   },
+  quantity: {
+    type: Number,
+  },
 });
 
 const categorySchema = new Schema({

@@ -30,6 +30,28 @@ export const successPaymentService = async (memo) => {
 
     return user;
   }
+  // if (collectionId === 2) {
+  //   const boostsArray = await BoostsCollection.findOne();
+
+  //   const boosts = [
+  //     ...boostsArray.boosts[0].common,
+  //     ...boostsArray.boosts[1].special,
+  //   ];
+
+  //   const boost = boosts.find((boost) => boost.idItem === itemId);
+
+  //   if (!boost) {
+  //     throw createHttpError(404, 'Boost not found!');
+  //   }
+  //   const user = await UsersCollection.findOneAndUpdate(
+  //     { id: userId },
+  //     { $push: { boosts: boost } },
+  //     { new: true },
+  //   );
+
+  //   return user;
+  // }
+
   if (collectionId === 2) {
     const boostsArray = await BoostsCollection.findOne();
 
@@ -43,9 +65,41 @@ export const successPaymentService = async (memo) => {
     if (!boost) {
       throw createHttpError(404, 'Boost not found!');
     }
+
+    const boostWithQuantity = { ...boost, quantity: 1 };
+
     const user = await UsersCollection.findOneAndUpdate(
       { id: userId },
-      { $push: { boosts: boost } },
+      [
+        {
+          $set: {
+            boosts: {
+              $cond: {
+                if: { $in: [itemId, '$boosts.idItem'] },
+                then: {
+                  $map: {
+                    input: '$boosts',
+                    as: 'boost',
+                    in: {
+                      $cond: {
+                        if: { $eq: ['$$boost.idItem', itemId] },
+                        then: {
+                          $mergeObjects: [
+                            '$$boost',
+                            { quantity: { $add: ['$$boost.quantity', 1] } },
+                          ],
+                        },
+                        else: '$$boost',
+                      },
+                    },
+                  },
+                },
+                else: { $concatArrays: ['$boosts', [boostWithQuantity]] },
+              },
+            },
+          },
+        },
+      ],
       { new: true },
     );
 
@@ -152,5 +206,4 @@ export const writeOffTokensInPhenerium = async (amount, memo) => {
     { $inc: { tokens: -amount } },
     { new: true },
   );
-
 };
