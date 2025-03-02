@@ -30,28 +30,6 @@ export const successPaymentService = async (memo) => {
 
     return user;
   }
-  // if (collectionId === 2) {
-  //   const boostsArray = await BoostsCollection.findOne();
-
-  //   const boosts = [
-  //     ...boostsArray.boosts[0].common,
-  //     ...boostsArray.boosts[1].special,
-  //   ];
-
-  //   const boost = boosts.find((boost) => boost.idItem === itemId);
-
-  //   if (!boost) {
-  //     throw createHttpError(404, 'Boost not found!');
-  //   }
-  //   const user = await UsersCollection.findOneAndUpdate(
-  //     { id: userId },
-  //     { $push: { boosts: boost } },
-  //     { new: true },
-  //   );
-
-  //   return user;
-  // }
-
   if (collectionId === 2) {
     const boostsArray = await BoostsCollection.findOne();
 

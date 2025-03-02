@@ -42,6 +42,46 @@ export const startFarming = async (id, boostsIdsArray) => {
     return userUpd;
   }
 
+  // const matchedBoosts = user.boosts.filter((boost) =>
+  //   boostsIdsArray.includes(boost.idItem),
+  // );
+
+  // if (matchedBoosts.length !== boostsIdsArray.length) {
+  //   throw new Error("User doesn't have all required boosts!");
+  // }
+
+  // if (matchedBoosts.length === boostsIdsArray.length) {
+  //   const boostBonusSum = matchedBoosts.reduce(
+  //     (sum, boost) => sum + boost.boost_bonus,
+  //     0,
+  //   );
+
+  //   const remainingBoosts = user.boosts.filter(
+  //     (boost) => !boostsIdsArray.includes(boost.idItem),
+  //   );
+  //   const currentActiveBoosts = user.boosts.filter((boost) =>
+  //     boostsIdsArray.includes(boost.idItem),
+  //   );
+
+  //   const userUpd = await UsersCollection.findOneAndUpdate(
+  //     { id },
+  //     {
+  //       $set: {
+  //         farmStart,
+  //         farmEnd,
+  //         currentBoost: boostBonusSum,
+  //         isFarming: true,
+  //         boosts: remainingBoosts,
+  //         activeBoosts: currentActiveBoosts,
+  //         tempTokens: baseTokens * boostBonusSum,
+  //       },
+  //     },
+  //     { new: true },
+  //   );
+
+  //   return userUpd;
+  // }
+
   const matchedBoosts = user.boosts.filter((boost) =>
     boostsIdsArray.includes(boost.idItem),
   );
@@ -56,26 +96,54 @@ export const startFarming = async (id, boostsIdsArray) => {
       0,
     );
 
-    const remainingBoosts = user.boosts.filter(
-      (boost) => !boostsIdsArray.includes(boost.idItem),
-    );
     const currentActiveBoosts = user.boosts.filter((boost) =>
       boostsIdsArray.includes(boost.idItem),
     );
 
     const userUpd = await UsersCollection.findOneAndUpdate(
       { id },
-      {
-        $set: {
-          farmStart,
-          farmEnd,
-          currentBoost: boostBonusSum,
-          isFarming: true,
-          boosts: remainingBoosts,
-          activeBoosts: currentActiveBoosts,
-          tempTokens: baseTokens * boostBonusSum,
+      [
+        {
+          $set: {
+            boosts: {
+              $map: {
+                input: '$boosts',
+                in: {
+                  $cond: {
+                    if: { $in: ['$$this.idItem', boostsIdsArray] },
+                    then: {
+                      $cond: {
+                        if: { $gt: ['$$this.quantity', 1] },
+                        then: {
+                          $mergeObjects: [
+                            '$$this',
+                            { quantity: { $subtract: ['$$this.quantity', 1] } },
+                          ],
+                        },
+                        else: null,
+                      },
+                    },
+                    else: '$$this',
+                  },
+                },
+              },
+            },
+            farmStart: farmStart,
+            farmEnd: farmEnd,
+            currentBoost: boostBonusSum,
+            isFarming: true,
+            activeBoosts: currentActiveBoosts,
+            tempTokens: baseTokens * boostBonusSum,
+          },
         },
-      },
+        {
+          $set: {
+            boosts: {
+              $filter: { input: '$boosts', cond: { $ne: ['$$this', null] } },
+            },
+          },
+        },
+      ],
       { new: true },
     );
 
