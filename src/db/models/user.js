@@ -51,6 +51,7 @@ const user = new Schema(
         collectionId: Number,
         desc: String,
         price: String,
+        quantity: Number,
       },
     ],
     activeSkins: [
@@ -70,6 +71,7 @@ const user = new Schema(
         collectionId: Number,
         desc: String,
         price: String,
+        quantity: Number,
       },
     ],
     nextSkinsBonusUpdate: { type: Number },
