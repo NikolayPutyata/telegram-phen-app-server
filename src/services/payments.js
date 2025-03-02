@@ -44,41 +44,9 @@ export const successPaymentService = async (memo) => {
       throw createHttpError(404, 'Boost not found!');
     }
 
-    // const user = await UsersCollection.findOneAndUpdate(
-    //   { id: userId },
-    //   [
-    //     {
-    //       $set: {
-    //         boosts: {
-    //           $cond: {
-    //             if: { $in: [itemId, '$boosts.idItem'] },
-    //             then: {
-    //               $map: {
-    //                 input: '$boosts',
-    //                 as: 'boost',
-    //                 in: {
-    //                   $cond: {
-    //                     if: { $eq: ['$$boost.idItem', itemId] },
-    //                     then: {
-    //                       $mergeObjects: [
-    //                         '$$boost',
-    //                         { quantity: { $add: ['$$boost.quantity', 1] } },
-    //                       ],
-    //                     },
-    //                     else: '$$boost',
-    //                   },
-    //                 },
-    //               },
-    //             },
-    //             else: { $concatArrays: ['$boosts', [boostWithQuantity]] },
-    //           },
-    //         },
-    //       },
-    //     },
-    //   ],
-    //   { new: true },
-    // );
     const boostWithQuantity = { ...boost, quantity: 1 };
+
+    console.log('boostWithQuantity before update:', boostWithQuantity);
 
     const user = await UsersCollection.findOneAndUpdate(
       { id: userId },
