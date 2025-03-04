@@ -82,7 +82,7 @@ export const successPaymentService = async (memo) => {
                 else: {
                   $concatArrays: [
                     { $ifNull: ['$boosts', []] },
-                    [boostWithQuantity],
+                    [{ ...boost, quantity: 1 }],
                   ],
                 },
               },
