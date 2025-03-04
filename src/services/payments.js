@@ -45,7 +45,8 @@ export const successPaymentService = async (memo) => {
     }
 
     console.log('BOOST:', boost);
-    const boostWithQuantity = { ...boost, quantity: 1 };
+    const boostPlain = boost.toObject ? boost.toObject() : { ...boost };
+    const boostWithQuantity = { ...boostPlain, quantity: 1 };
 
     console.log('boostWithQuantity before update:', boostWithQuantity);
 
@@ -82,7 +83,7 @@ export const successPaymentService = async (memo) => {
                 else: {
                   $concatArrays: [
                     { $ifNull: ['$boosts', []] },
-                    [{ ...boost, quantity: 1 }],
+                    [boostWithQuantity],
                   ],
                 },
               },
