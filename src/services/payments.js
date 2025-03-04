@@ -44,11 +44,8 @@ export const successPaymentService = async (memo) => {
       throw createHttpError(404, 'Boost not found!');
     }
 
-    console.log('BOOST:', boost);
     const boostPlain = boost.toObject ? boost.toObject() : { ...boost };
     const boostWithQuantity = { ...boostPlain, quantity: 1 };
-
-    console.log('boostWithQuantity before update:', boostWithQuantity);
 
     const user = await UsersCollection.findOneAndUpdate(
       { id: userId },
