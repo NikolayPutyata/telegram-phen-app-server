@@ -44,6 +44,7 @@ export const successPaymentService = async (memo) => {
       throw createHttpError(404, 'Boost not found!');
     }
 
+    console.log(boost);
     const boostWithQuantity = { ...boost, quantity: 1 };
 
     console.log('boostWithQuantity before update:', boostWithQuantity);
