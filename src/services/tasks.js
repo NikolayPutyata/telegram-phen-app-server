@@ -1,5 +1,7 @@
+import axios from 'axios';
 import { UsersCollection } from '../db/models/user.js';
 import createHttpError from 'http-errors';
+import { env } from '../utils/env.js';
 
 export const completedTaskService = async (userId, taskId) => {
   const updatedUser = await UsersCollection.findOneAndUpdate(
@@ -115,4 +117,14 @@ export const completedTaskService = async (userId, taskId) => {
   }
 
   return updatedUser;
+};
+
+export const getChatMemberService = async (userId, channelId) => {
+  const { data } = await axios.get(
+    `https://api.telegram.org/bot${env(
+      'TELEGRAM_BOT_TOKEN',
+    )}/getChatMember?chat_id=${channelId}&user_id=${userId}`,
+  );
+
+  return data;
 };
