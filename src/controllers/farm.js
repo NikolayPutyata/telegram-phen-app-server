@@ -18,6 +18,7 @@ export const farmStartController = async (req, res) => {
     tokensToGet: user.tempTokens,
     farmingCycle: user.farmingCycle,
     farmingCycleInMilisec: user.farmingCycle * 60 * 60 * 1000,
+    farmStart: user.farmStart,
   });
 };
 
@@ -30,6 +31,7 @@ export const claimTokensController = async (req, res) => {
     message: 'Download completed successfully!',
     tokens: user.tokens,
     activeBoosts: user.activeBoosts,
+    farmStart: user.farmStart,
   });
 };
 
