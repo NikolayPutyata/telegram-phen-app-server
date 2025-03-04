@@ -83,7 +83,7 @@ const user = new Schema(
           svg_url: String,
           task_bonus: Number,
           completed: Boolean,
-          channelId: String ,
+          channelId: String,
         },
       ],
       partners: [

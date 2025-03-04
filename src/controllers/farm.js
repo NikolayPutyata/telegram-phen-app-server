@@ -17,6 +17,7 @@ export const farmStartController = async (req, res) => {
     boosts: user.boosts,
     tokensToGet: user.tempTokens,
     farmingCycle: user.farmingCycle,
+    farmingCycleInMilisec: user.farmingCycle * 60 * 60 * 1000,
   });
 };
 
