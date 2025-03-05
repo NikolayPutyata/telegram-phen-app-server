@@ -1,4 +1,4 @@
-import { getUserFriends, getUserInit } from '../services/user.js';
+import { getBoostsAndSkinsService, getUserInit } from '../services/user.js';
 import createHttpError from 'http-errors';
 
 export const getInitUserController = async (req, res) => {
@@ -33,10 +33,10 @@ export const getInitUserController = async (req, res) => {
   });
 };
 
-export const getUsersFriendsController = async (req, res) => {
-  const userId = req.body.id;
+export const getBoostsAndSkinsController = async (req, res) => {
+  const userId = req.body.userId;
 
-  const friends = await getUserFriends(userId);
+  const user = await getBoostsAndSkinsService(userId);
 
-  res.status(200).json({ data: friends });
+  res.status(200).json({ skins: user.skins, boosts: user.boosts });
 };

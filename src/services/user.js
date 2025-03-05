@@ -30,8 +30,8 @@ export const getUserInit = async (user) => {
   return userFromDB;
 };
 
-export const getUserFriends = async (id) => {
-  const userFromDB = await UsersCollection.findOne({ id: id });
+export const getBoostsAndSkinsService = async (userId) => {
+  const userFromDB = await UsersCollection.findOne({ id: userId });
 
-  return userFromDB.friends.length;
+  return userFromDB;
 };
