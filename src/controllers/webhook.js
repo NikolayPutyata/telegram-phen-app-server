@@ -9,7 +9,22 @@ bot.start(async (ctx) => {
   const userId = messageText.split(' ')[1];
 
   await addFriendToUserService(userId, friendId, firstName);
-  await ctx.reply('Hello in Phenerium!');
+  await ctx.reply(
+    `Welcome to Phenerium, ${firstName}! 🚀\n\n` +
+      `Dive into an exciting world of token farming! Boost your progress with powerful upgrades, invite friends to earn bonuses, and join exclusive presales and airdrops. Ready to get started? Tap the button below and jump into the adventure!`,
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'Open App',
+              url: 'https://telegram-phen-app.vercel.app/',
+            },
+          ],
+        ],
+      },
+    },
+  );
 });
 
 bot.on('pre_checkout_query', async (ctx) => {
