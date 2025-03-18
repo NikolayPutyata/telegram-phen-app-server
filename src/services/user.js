@@ -22,6 +22,7 @@ export const getUserInit = async (user) => {
       activeBoosts: [],
       farmingCycle: 8,
       tgRefLink: '',
+      tgRefLinkCode: '',
       tempTokens: 0,
       usersTasks: { ...tasksData.toObject().tasks },
     });
@@ -38,10 +39,18 @@ export const getBoostsAndSkinsService = async (userId) => {
 };
 
 export const addRefTgLinkService = async (id, link) => {
+  const tgRefLinkCode = link.split('_tgr_')[1];
+
   const userFromDB = await UsersCollection.findOneAndUpdate(
     { id: id },
-    { $set: { tgRefLink: link } },
+    {
+      $set: {
+        tgRefLink: link,
+        tgRefLinkCode: tgRefLinkCode,
+      },
+    },
     { new: true },
   );
+
   return userFromDB;
 };

@@ -118,6 +118,9 @@ const user = new Schema(
     tgRefLink: {
       type: String,
     },
+    tgRefLinkCode: {
+      type: String,
+    },
     tempTokens: {
       type: Number,
     },
