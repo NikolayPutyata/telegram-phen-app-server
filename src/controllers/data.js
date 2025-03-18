@@ -1,7 +1,7 @@
-import { getAllBoostsService } from '../services/data.js';
+import { getAllData } from '../services/data.js';
 
 export const getAllBoostsController = async (req, res) => {
-  const boosts = await getAllBoostsService();
+  const data = await getAllData();
 
-  res.status(200).json({ data: boosts });
+  res.status(200).json({ boosts: data.boosts, skins: data.skins });
 };

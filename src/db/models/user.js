@@ -40,7 +40,13 @@ const user = new Schema(
       type: Number,
     },
     skins: [
-      { id: Number, name: String, skin_photo_url: String, skin_bonus: Number },
+      {
+        id: Number,
+        name: String,
+        skin_photo_url: String,
+        skin_bonus: Number,
+        price: Number,
+      },
     ],
     boosts: [
       {

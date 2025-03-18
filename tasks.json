@@ -1,0 +1,71 @@
+
+[{"boosts": [
+  
+  {"common": [{"idItem": 10,
+  "name": "V3 Engine",
+  "desc": "2X",
+  "boost_bonus": 2,
+  "collectionId": 2,
+  "price": "100",
+"boost_photo_url": "https://res.cloudinary.com/dv1acgeyp/image/upload/v1740655528/IMG_2891_11zon_ygjuv4.webp"
+}, 
+  {"idItem": 11,
+"name": "Satellite",
+"desc": "3X",
+"boost_bonus": 3,
+"collectionId": 2,
+"price": "10",
+"boost_photo_url": "https://res.cloudinary.com/dv1acgeyp/image/upload/v1740655528/sate_11zon_apfhzd.webp"
+}, 
+  {"idItem": 12,
+"name": "Intergalactic Radar",
+"desc": "4X",
+"boost_bonus": 4,
+"collectionId": 2,
+"price": "15",
+"boost_photo_url": "https://res.cloudinary.com/dv1acgeyp/image/upload/v1740655527/IMG_2890_11zon_swnhx2.webp"
+}, 
+  {"idItem": 13,
+"name": "Nano Fuel",
+"desc": "5X",
+"boost_bonus": 5,
+"collectionId": 2,
+"price": "20",
+"boost_photo_url": "https://res.cloudinary.com/dv1acgeyp/image/upload/v1740655527/IMG_2889_11zon_ryjtoc.webp"
+}]},
+{"special": [
+  {"idItem": 14,
+"name": "Medical Team",
+"desc": "10X",
+"boost_bonus": 10,
+"collectionId": 2,
+"price": "100",
+"boost_photo_url": "https://res.cloudinary.com/dv1acgeyp/image/upload/v1740656126/medic_11zon_dyygxi.webp"
+}, 
+  {"idItem": 15,
+"name": "Research Shuttle",
+"desc": "15X",
+"boost_bonus": 15,
+"collectionId": 2,
+"price": "101",
+"boost_photo_url": "https://res.cloudinary.com/dv1acgeyp/image/upload/v1740656125/sshuuttle_mp13v7.webp"
+}, 
+  {"idItem": 16,
+"name": "Vespene Laser",
+"desc": "20X",
+"boost_bonus": 20,
+"collectionId": 2,
+"price": "102",
+"boost_photo_url": "https://res.cloudinary.com/dv1acgeyp/image/upload/v1740656126/laser_11zon_wnwtfx.webp"
+}, 
+  {"idItem": 17,
+"name": "Escort Squadron",
+"desc": "25X",
+"boost_bonus": 25,
+"collectionId": 2,
+"price": "103",
+"boost_photo_url": "https://res.cloudinary.com/dv1acgeyp/image/upload/v1740656125/escort_11zon_ddteiq.webp"
+}]}
+
+]
+}]

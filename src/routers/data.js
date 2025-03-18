@@ -3,6 +3,6 @@ import { getAllBoostsController } from '../controllers/data.js';
 
 const router = Router();
 
-router.get('/getAllBoosts', getAllBoostsController);
+router.get('/getAllData', getAllBoostsController);
 
 export default router;

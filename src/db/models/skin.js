@@ -1,22 +1,60 @@
 import { model, Schema } from 'mongoose';
 
-const skins = new Schema(
+const skinSchema = new Schema({
+  id: {
+    type: Number,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  skin_photo_url: {
+    type: String,
+    required: false,
+    default: '',
+  },
+  skin_bonus: {
+    type: Number,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+});
+
+const skinsCollectionSchema = new Schema(
   {
-    id: {
-      type: Number,
+    commonCollection: {
+      type: [skinSchema],
       required: true,
+      default: [],
     },
-    name: {
-      type: String,
+    bronzeCollection: {
+      type: [skinSchema],
       required: true,
+      default: [],
     },
-    skin_photo_url: {
-      type: String,
+    silverCollection: {
+      type: [skinSchema],
       required: true,
+      default: [],
     },
-    skin_bonus: {
-      type: Number,
+    goldCollection: {
+      type: [skinSchema],
       required: true,
+      default: [],
+    },
+    platinumCollection: {
+      type: [skinSchema],
+      required: true,
+      default: [],
+    },
+    diamondCollection: {
+      type: [skinSchema],
+      required: true,
+      default: [],
     },
   },
   {
@@ -25,4 +63,4 @@ const skins = new Schema(
   },
 );
 
-export const SkinsCollection = model('skins', skins);
+export const SkinsCollection = model('skins', skinsCollectionSchema);
