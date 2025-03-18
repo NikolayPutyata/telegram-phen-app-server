@@ -44,6 +44,7 @@ const user = new Schema(
         id: Number,
         name: String,
         skin_photo_url: String,
+        skin_photo_url_small: String,
         skin_bonus: Number,
         price: Number,
       },

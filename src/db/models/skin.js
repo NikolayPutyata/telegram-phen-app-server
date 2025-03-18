@@ -14,6 +14,11 @@ const skinSchema = new Schema({
     required: false,
     default: '',
   },
+  skin_photo_url_small: {
+    type: String,
+    required: false,
+    default: '',
+  },
   skin_bonus: {
     type: Number,
     required: true,
