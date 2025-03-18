@@ -11,7 +11,7 @@ bot.start(async (ctx) => {
   await addFriendToUserService(userId, friendId, firstName);
   await ctx.reply(
     `Welcome to Phenerium, ${firstName}! 🚀\n\n` +
-      `Dive into an exciting world of token farming! Boost your progress with powerful upgrades, invite friends to earn bonuses, and join exclusive presales and airdrops. Ready to get started? Tap the button below and jump into the adventure!`,
+      `Dive into an exciting world of token farming! Boost your progress with powerful upgrades, invite friends to earn bonuses, and join exclusive presales and airdrops.\n\n Ready to get started?\n Tap the button below and jump into the adventure!`,
     {
       reply_markup: {
         inline_keyboard: [
