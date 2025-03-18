@@ -49,7 +49,7 @@ export const addRefTgLinkController = async (req, res) => {
   const id = req.body.id;
   const link = req.body.link;
 
-  const newLink = await addRefTgLinkService(id, link);
+  const user = await addRefTgLinkService(id, link);
 
-  res.status(200).json({ data: newLink });
+  res.status(200).json({ link: user.tgRefLink });
 };
