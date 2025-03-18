@@ -1,4 +1,8 @@
-import { getBoostsAndSkinsService, getUserInit } from '../services/user.js';
+import {
+  addRefTgLinkService,
+  getBoostsAndSkinsService,
+  getUserInit,
+} from '../services/user.js';
 import createHttpError from 'http-errors';
 
 export const getInitUserController = async (req, res) => {
@@ -29,6 +33,7 @@ export const getInitUserController = async (req, res) => {
       usersTasks: userInit.usersTasks,
       activeBoosts: userInit.activeBoosts,
       farmingCycle: userInit.farmingCycle,
+      tgRefLink: userInit.tgRefLink,
     },
   });
 };
@@ -39,4 +44,12 @@ export const getBoostsAndSkinsController = async (req, res) => {
   const user = await getBoostsAndSkinsService(userId);
 
   res.status(200).json({ skins: user.skins, boosts: user.boosts });
+};
+export const addRefTgLinkController = async (req, res) => {
+  const id = req.body.id;
+  const link = req.body.link;
+
+  const newLink = await addRefTgLinkService(id, link);
+
+  res.status(200).json({ data: newLink });
 };

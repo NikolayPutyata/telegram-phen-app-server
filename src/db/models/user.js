@@ -115,6 +115,9 @@ const user = new Schema(
     farmingCycle: {
       type: Number,
     },
+    tgRefLink: {
+      type: String,
+    },
     tempTokens: {
       type: Number,
     },
