@@ -9,10 +9,7 @@ bot.start(async (ctx) => {
   const userId = messageText.split(' ')[1];
   const tgRefCode = userId.split('_')[2];
 
-  console.log(userId, friendId, firstName, tgRefCode);
-  console.log(userId.split('_')[1]);
-
-  if (userId.split('_')[1] === 'mup') {
+  if (userId.split('_')[1] === 'tgr') {
     await addFriendToUserService({ friendId, firstName, tgRefCode });
   } else {
     await addFriendToUserService({
