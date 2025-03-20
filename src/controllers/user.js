@@ -34,6 +34,7 @@ export const getInitUserController = async (req, res) => {
       activeBoosts: userInit.activeBoosts,
       farmingCycle: userInit.farmingCycle,
       tgRefLink: userInit.tgRefLink,
+      refLink: userInit.tgRefLink,
     },
   });
 };
