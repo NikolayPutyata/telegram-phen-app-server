@@ -13,9 +13,13 @@ bot.start(async (ctx) => {
   console.log(userId.split('_')[1]);
 
   if (userId.split('_')[1] === 'mup') {
-    await addFriendToUserService(friendId, firstName, tgRefCode);
+    await addFriendToUserService({ friendId, firstName, tgRefCode });
   } else {
-    await addFriendToUserService(Number(userId), friendId, firstName);
+    await addFriendToUserService({
+      userId: Number(userId),
+      friendId,
+      firstName,
+    });
   }
 
   await ctx.reply(
