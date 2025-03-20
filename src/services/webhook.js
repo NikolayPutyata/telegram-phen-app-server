@@ -102,13 +102,12 @@
 // };
 import { UsersCollection } from '../db/models/user.js';
 
-export const addFriendToUserService = async ({
+export const addFriendToUserService = async (
   userId,
   friendId,
   firstName,
   tgRefCode,
-  photo,
-}) => {
+) => {
   console.log(userId, friendId, firstName, tgRefCode);
 
   if (userId && userId === Number(friendId)) {
