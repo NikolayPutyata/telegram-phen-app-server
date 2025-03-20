@@ -6,7 +6,12 @@ bot.start(async (ctx) => {
   const friendId = ctx.from.id;
   const firstName = ctx.from.first_name;
   const messageText = ctx.message?.text || '';
+
+  console.log(messageText);
+
   const userId = messageText.split(' ')[1];
+
+  console.log(userId);
 
   await addFriendToUserService(userId, friendId, firstName);
   await ctx.reply(
