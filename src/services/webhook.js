@@ -109,6 +109,8 @@ export const addFriendToUserService = async ({
   tgRefCode,
   photo,
 }) => {
+  console.log(userId, friendId, firstName, tgRefCode);
+
   if (userId && userId === Number(friendId)) {
     return;
   }
