@@ -6,18 +6,19 @@ bot.start(async (ctx) => {
   const friendId = ctx.from.id;
   const firstName = ctx.from.first_name;
   const messageText = ctx.message?.text || '';
-
-  console.log(messageText);
-
   const userId = messageText.split(' ')[1];
+  const tgRefCode = userId.split('_')[2];
 
-  console.log(userId);
+  if (userId.split('_')[1] === 'mup') {
+    await addFriendToUserService({ friendId, firstName, tgRefCode });
+  } else {
+    await addFriendToUserService({
+      userId: Number(userId),
+      friendId,
+      firstName,
+    });
+  }
 
-  console.log(userId.split('_'));
-  console.log(userId.split('_')[1]);
-  console.log(userId.split('_')[2]);
-
-  await addFriendToUserService(userId, friendId, firstName);
   await ctx.reply(
     `Welcome to Phenerium, ${firstName}! 🚀\n\n` +
       `Dive into an exciting world of token farming! Boost your progress with powerful upgrades, invite friends to earn bonuses, and join exclusive presales and airdrops.\n\n Ready to get started?\n Tap the button below and jump into the adventure!`,
