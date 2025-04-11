@@ -1,4 +1,5 @@
 import {
+  addPrizeService,
   addRefTgLinkService,
   getBoostsAndSkinsService,
   getUserInit,
@@ -53,4 +54,14 @@ export const addRefTgLinkController = async (req, res) => {
   const user = await addRefTgLinkService(id, link);
 
   res.status(200).json({ link: user.tgRefLink });
+};
+
+export const sendPrizeController = async (req, res) => {
+  const userId = req.body.userId;
+  const boostId = req.body.boostId;
+  const collectionId = req.body.collectionId;
+
+  const user = await addPrizeService(userId, boostId, collectionId);
+
+  res.status(200).json({ tokens: user.tokens, boosts: user.boosts });
 };

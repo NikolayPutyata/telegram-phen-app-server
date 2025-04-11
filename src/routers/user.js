@@ -6,6 +6,7 @@ import {
   addRefTgLinkController,
   getBoostsAndSkinsController,
   getInitUserController,
+  sendPrizeController,
 } from '../controllers/user.js';
 import { initUserSchema } from '../validation/users.js';
 
@@ -18,4 +19,5 @@ router.post(
 );
 router.post('/getBoostsAndSkins', ctrlWrapper(getBoostsAndSkinsController));
 router.post('/addRefTgLink', ctrlWrapper(addRefTgLinkController));
+router.post('/sendPrize', ctrlWrapper(sendPrizeController));
 export default router;
