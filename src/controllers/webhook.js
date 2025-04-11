@@ -9,6 +9,14 @@ bot.start(async (ctx) => {
   const userId = messageText.split(' ')[1];
   const tgRefCode = userId.split('_')[2];
 
+  console.log(
+    `friendId: ${ctx.from.id}, firstName: ${
+      ctx.from.first_name
+    }, messageText: ${ctx.message?.text}, userId: ${
+      messageText.split(' ')[1]
+    }, tgRefCode: ${userId.split('_')[2]}`,
+  );
+
   await ctx.reply(
     `Welcome to Phenerium, ${firstName}! 🚀\n\n` +
       `Dive into an exciting world of token farming! Boost your progress with powerful upgrades, invite friends to earn bonuses, and join exclusive presales and airdrops.\n\n Ready to get started?\n Tap the button below and jump into the adventure!`,
