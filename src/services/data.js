@@ -7,8 +7,6 @@ export const getAllData = async () => {
   const skins = await SkinsCollection.findOne();
   const casesAndRobots = await CasesAndRobotsCollection.findOne();
 
-  console.log(casesAndRobots);
-
   return {
     boosts: {
       common: [...boosts.boosts[0].common],

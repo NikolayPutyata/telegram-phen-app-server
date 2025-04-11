@@ -9,16 +9,6 @@ bot.start(async (ctx) => {
   const userId = messageText.split(' ')[1];
   const tgRefCode = userId.split('_')[2];
 
-  if (userId.split('_')[1] === 'tgr') {
-    await addFriendToUserService({ friendId, firstName, tgRefCode });
-  } else {
-    await addFriendToUserService({
-      userId: Number(userId),
-      friendId,
-      firstName,
-    });
-  }
-
   await ctx.reply(
     `Welcome to Phenerium, ${firstName}! 🚀\n\n` +
       `Dive into an exciting world of token farming! Boost your progress with powerful upgrades, invite friends to earn bonuses, and join exclusive presales and airdrops.\n\n Ready to get started?\n Tap the button below and jump into the adventure!`,
@@ -35,6 +25,16 @@ bot.start(async (ctx) => {
       },
     },
   );
+
+  if (userId.split('_')[1] === 'tgr') {
+    await addFriendToUserService({ friendId, firstName, tgRefCode });
+  } else {
+    await addFriendToUserService({
+      userId: Number(userId),
+      friendId,
+      firstName,
+    });
+  }
 });
 
 bot.on('pre_checkout_query', async (ctx) => {
