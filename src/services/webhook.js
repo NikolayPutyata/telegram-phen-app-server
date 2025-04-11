@@ -4,7 +4,6 @@ export const addFriendToUserService = async ({
   userId,
   friendId,
   firstName,
-  tgRefCode,
 }) => {
   if (userId && userId === Number(friendId)) {
     return;
@@ -12,15 +11,11 @@ export const addFriendToUserService = async ({
 
   const friend = await UsersCollection.findOne({ id: Number(friendId) });
 
-  if (friend && tgRefCode && friend.tgRefLinkCode === tgRefCode) {
-    return;
-  }
-
   if (friend) {
     return;
   }
 
-  const filter = userId ? { id: userId } : { tgRefLinkCode: tgRefCode };
+  const filter = { id: userId };
 
   const updatedUser = await UsersCollection.findOneAndUpdate(
     filter,

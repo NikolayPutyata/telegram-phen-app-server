@@ -7,15 +7,14 @@ bot.start(async (ctx) => {
   const firstName = ctx.from.first_name;
   const messageText = ctx.message?.text || '';
   const userId = messageText.split(' ')[1];
-  const tgRefCode = userId.split('_')[2];
 
-  console.log(
-    `friendId: ${ctx.from.id}, firstName: ${
-      ctx.from.first_name
-    }, messageText: ${ctx.message?.text}, userId: ${
-      messageText.split(' ')[1]
-    }, tgRefCode: ${userId.split('_')[2]}`,
-  );
+  if (userId) {
+    await addFriendToUserService({
+      userId: Number(userId),
+      friendId,
+      firstName,
+    });
+  }
 
   await ctx.reply(
     `Welcome to Phenerium, ${firstName}! 🚀\n\n` +
@@ -33,16 +32,6 @@ bot.start(async (ctx) => {
       },
     },
   );
-
-  if (userId.split('_')[1] === 'tgr') {
-    await addFriendToUserService({ friendId, firstName, tgRefCode });
-  } else {
-    await addFriendToUserService({
-      userId: Number(userId),
-      friendId,
-      firstName,
-    });
-  }
 });
 
 bot.on('pre_checkout_query', async (ctx) => {
