@@ -2,6 +2,7 @@ import createHttpError from 'http-errors';
 import { BoostsCollection } from '../db/models/boost.js';
 import { TasksCollection } from '../db/models/tasks.js';
 import { UsersCollection } from '../db/models/user.js';
+import { SkinsCollection } from '../db/models/skin.js';
 
 export const getUserInit = async (user) => {
   const userFromDB = await UsersCollection.findOne({ id: user.id });
@@ -153,8 +154,42 @@ export const addPrizeService = async (userId, boostId, collectionId) => {
 
     return user;
   }
-  // if (collectionId === 3) {
-  // }
+  if (collectionId === 3) {
+    const skinsDoc = await SkinsCollection.findOne();
+
+    const collections = [
+      { name: 'commonCollection', colId: 1 },
+      { name: 'bronzeCollection', colId: 2 },
+      { name: 'silverCollection', colId: 3 },
+      { name: 'goldCollection', colId: 4 },
+      { name: 'platinumCollection', colId: 5 },
+      { name: 'diamondCollection', colId: 6 },
+    ];
+
+    let foundSkin = null;
+    let colId = null;
+    let index = null;
+
+    for (const collection of collections) {
+      const skins = skinsDoc[collection.name];
+      const skinIndex = skins.findIndex((skin) => skin.id === boostId);
+
+      if (skinIndex !== -1) {
+        foundSkin = skins[skinIndex];
+        colId = collection.colId;
+        index = skinIndex;
+        break;
+      }
+    }
+
+    if (!foundSkin) {
+      throw new Error('Skin not found');
+    }
+
+    const updatedUser = await getCollectionItemService(userId, colId, index);
+
+    return updatedUser;
+  }
 };
 
 export const getCollectionItemService = async (userId, colId, index) => {

@@ -65,7 +65,11 @@ export const sendPrizeController = async (req, res) => {
 
   const user = await addPrizeService(userId, boostId, collectionId);
 
-  res.status(200).json({ tokens: user.tokens, boosts: user.boosts });
+  res.status(200).json({
+    tokens: user.tokens,
+    boosts: user.boosts,
+    skinsCollection: user.skinsCollections,
+  });
 };
 
 export const getCollectionItemController = async (req, res) => {
