@@ -5,6 +5,7 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   addRefTgLinkController,
   getBoostsAndSkinsController,
+  getCollectionItemController,
   getInitUserController,
   sendPrizeController,
 } from '../controllers/user.js';
@@ -20,4 +21,5 @@ router.post(
 router.post('/getBoostsAndSkins', ctrlWrapper(getBoostsAndSkinsController));
 router.post('/addRefTgLink', ctrlWrapper(addRefTgLinkController));
 router.post('/sendPrize', ctrlWrapper(sendPrizeController));
+router.post('/getCollectionItem', ctrlWrapper(getCollectionItemController));
 export default router;

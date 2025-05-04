@@ -2,6 +2,7 @@ import {
   addPrizeService,
   addRefTgLinkService,
   getBoostsAndSkinsService,
+  getCollectionItemService,
   getUserInit,
 } from '../services/user.js';
 import createHttpError from 'http-errors';
@@ -36,6 +37,7 @@ export const getInitUserController = async (req, res) => {
       farmingCycle: userInit.farmingCycle,
       tgRefLink: userInit.tgRefLink,
       refLink: userInit.tgRefLink,
+      skinsCollection: userInit.skinsCollections,
     },
   });
 };
@@ -64,4 +66,16 @@ export const sendPrizeController = async (req, res) => {
   const user = await addPrizeService(userId, boostId, collectionId);
 
   res.status(200).json({ tokens: user.tokens, boosts: user.boosts });
+};
+
+export const getCollectionItemController = async (req, res) => {
+  const userId = req.body.userId;
+  const colId = req.body.idUserCollection;
+  const index = req.body.index;
+
+  const user = await getCollectionItemService(userId, colId, index);
+
+  res
+    .status(200)
+    .json({ skinsCollection: user.skinsCollections, tokens: user.tokens });
 };

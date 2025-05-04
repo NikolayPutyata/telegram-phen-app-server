@@ -1,11 +1,11 @@
 import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
 import {
-  ONE_DAY,
   TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_8_HOURS,
   TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_12_HOURS,
   TOTAL_TOKENS_FARM_WITH_STARDART_SPEED_PER_24_HOURS,
 } from '../constants/index.js';
+import { SkinsCollection } from '../db/models/skin.js';
 
 export const startFarming = async (id, boostsIdsArray) => {
   const user = await UsersCollection.findOne({ id });
@@ -147,43 +147,86 @@ export const claimTokens = async (id) => {
   }
 };
 
-export const claimSkinsBonusService = async (id) => {
-  const user = await UsersCollection.findOne({ id });
+export const claimSkinsBonusService = async (id, colId, indexArray) => {
+  const validCollections = {
+    1: 'commonCollection',
+    2: 'bronzeCollection',
+    3: 'silverCollection',
+    4: 'goldCollection',
+    5: 'platinumCollection',
+    6: 'diamondCollection',
+  };
+
+  // Находим пользователя и проверяем коллекцию
+  const user = await UsersCollection.findOne({
+    id,
+    'skinsCollections.idUserCollection': colId,
+  });
 
   if (!user) {
-    throw createHttpError(404, 'User not found');
+    throw new Error('User or collection not found');
   }
 
-  const date = Date.now();
+  // Находим нужную коллекцию пользователя
+  const collection = user.skinsCollections.find(
+    (c) => c.idUserCollection === colId,
+  );
 
-  if (date < user.nextSkinsBonusUpdate) {
-    throw createHttpError(500, 'Bonus is not available yet!');
+  if (!collection) {
+    throw new Error('Collection not found');
   }
-  if (date > user.nextSkinsBonusUpdate) {
-    const nextSkinsBonusUpd = date + ONE_DAY;
-    const user = await UsersCollection.findOneAndUpdate(
-      { id },
-      [
-        {
-          $set: {
-            tokens: {
-              $add: [
-                '$tokens',
-                {
-                  $reduce: {
-                    input: '$activeSkins',
-                    initialValue: 0,
-                    in: { $add: ['$$value', '$$this.skin_bonus'] },
-                  },
-                },
-              ],
-            },
-            nextSkinsBonusUpdate: nextSkinsBonusUpd,
-          },
-        },
-      ],
-      { new: true },
-    );
-    return { newTokensAmount: user.tokens, nextSkinsBonusUpd };
+
+  // Проверяем, что все указанные скины собраны (true)
+  for (const index of indexArray) {
+    if (
+      index < 0 ||
+      index >= collection.images.length ||
+      !collection.images[index]
+    ) {
+      throw new Error(`Invalid or uncollected skin at index ${index}`);
+    }
   }
+
+  // Находим бонусы для указанных скинов из SkinsCollection
+  const skinsData = await SkinsCollection.findOne({});
+  if (!skinsData) {
+    throw new Error('Skins collection not found');
+  }
+
+  // Получаем массив скинов для указанной подколлекции
+  const skins = skinsData[validCollections[colId]] || [];
+  if (skins.length === 0) {
+    throw new Error(`No skins found in ${colId}`);
+  }
+
+  // Подсчитываем общий бонус
+  let totalBonus = 0;
+  for (const index of indexArray) {
+    if (index >= skins.length) {
+      throw new Error(`Skin at index ${index} does not exist in ${colId}`);
+    }
+    totalBonus += skins[index].skin_bonus || 0;
+  }
+
+  // Формируем обновления для скинов (устанавливаем images[index] в false)
+  const updateFields = {};
+  indexArray.forEach((index) => {
+    updateFields[`skinsCollections.$.images.${index}`] = false;
+  });
+
+  // Обновляем пользователя: устанавливаем images в false и добавляем токены
+  const updatedUser = await UsersCollection.findOneAndUpdate(
+    { id, 'skinsCollections.idUserCollection': colId },
+    {
+      $set: updateFields,
+      $inc: { tokens: totalBonus },
+    },
+    { new: true },
+  );
+
+  if (!updatedUser) {
+    throw new Error('Failed to update user');
+  }
+
+  return updatedUser;
 };

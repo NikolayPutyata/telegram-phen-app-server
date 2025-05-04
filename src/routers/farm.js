@@ -20,10 +20,6 @@ router.post(
   validateBody(claimSchema),
   ctrlWrapper(claimTokensController),
 );
-router.post(
-  '/claimSkinsBonus',
-  validateBody(claimSchema),
-  ctrlWrapper(claimSkinsBonusController),
-);
+router.post('/claimSkinsBonus', ctrlWrapper(claimSkinsBonusController));
 
 export default router;

@@ -37,8 +37,12 @@ export const claimTokensController = async (req, res) => {
 
 export const claimSkinsBonusController = async (req, res) => {
   const id = req.body.id;
+  const colId = req.body.colId;
+  const indexArray = req.body.indexArray;
 
-  const newTokensAmount = await claimSkinsBonusService(id);
+  const user = await claimSkinsBonusService(id, colId, indexArray);
 
-  res.status(200).json({ newTokensAmount });
+  res
+    .status(200)
+    .json({ skinsCollection: user.skinsCollections, tokens: user.tokens });
 };

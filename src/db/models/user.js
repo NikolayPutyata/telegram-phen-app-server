@@ -124,6 +124,12 @@ const user = new Schema(
     tempTokens: {
       type: Number,
     },
+    skinsCollections: [
+      {
+        idUserCollection: { type: Number },
+        images: [Boolean],
+      },
+    ],
   },
   {
     timestamps: true,

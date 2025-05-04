@@ -27,6 +27,14 @@ export const getUserInit = async (user) => {
       tgRefLinkCode: '',
       tempTokens: 0,
       usersTasks: { ...tasksData.toObject().tasks },
+      skinsCollections: [
+        { idUserCollection: 1, images: [true, true, false, false] },
+        { idUserCollection: 2, images: [false, false, false, false] },
+        { idUserCollection: 3, images: [false, false, false, false] },
+        { idUserCollection: 4, images: [false, false, false, false] },
+        { idUserCollection: 5, images: [false, false, false, false] },
+        { idUserCollection: 6, images: [false, false, false, false] },
+      ],
     });
     return newUser;
   }
@@ -147,4 +155,50 @@ export const addPrizeService = async (userId, boostId, collectionId) => {
   }
   // if (collectionId === 3) {
   // }
+};
+
+export const getCollectionItemService = async (userId, colId, index) => {
+  const tokenMap = {
+    1: 100,
+    2: 2000,
+    3: 3000,
+    4: 4500,
+    5: 8000,
+    6: 12000,
+  };
+
+  const user = await UsersCollection.findOne({
+    id: userId,
+    'skinsCollections.idUserCollection': colId,
+  });
+
+  if (!user) {
+    throw new Error('User or collection not found');
+  }
+
+  const collection = user.skinsCollections.find(
+    (c) => c.idUserCollection === colId,
+  );
+
+  if (!collection) {
+    throw new Error('Collection not found');
+  }
+
+  if (collection.images[index] === true) {
+    const tokensToAdd = tokenMap[colId] || 0;
+    const updatedUser = await UsersCollection.findOneAndUpdate(
+      { id: userId },
+      { $inc: { tokens: tokensToAdd } },
+      { new: true },
+    );
+    return updatedUser;
+  }
+
+  const updatedUser = await UsersCollection.findOneAndUpdate(
+    { id: userId, 'skinsCollections.idUserCollection': colId },
+    { $set: { [`skinsCollections.$.images.${index}`]: true } },
+    { new: true },
+  );
+
+  return updatedUser;
 };
