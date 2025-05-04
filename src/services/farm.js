@@ -157,7 +157,6 @@ export const claimSkinsBonusService = async (id, colId, indexArray) => {
     6: 'diamondCollection',
   };
 
-  // Находим пользователя и проверяем коллекцию
   const user = await UsersCollection.findOne({
     id,
     'skinsCollections.idUserCollection': colId,
@@ -167,7 +166,6 @@ export const claimSkinsBonusService = async (id, colId, indexArray) => {
     throw new Error('User or collection not found');
   }
 
-  // Находим нужную коллекцию пользователя
   const collection = user.skinsCollections.find(
     (c) => c.idUserCollection === colId,
   );
@@ -176,7 +174,6 @@ export const claimSkinsBonusService = async (id, colId, indexArray) => {
     throw new Error('Collection not found');
   }
 
-  // Проверяем, что все указанные скины собраны (true)
   for (const index of indexArray) {
     if (
       index < 0 ||
@@ -187,19 +184,16 @@ export const claimSkinsBonusService = async (id, colId, indexArray) => {
     }
   }
 
-  // Находим бонусы для указанных скинов из SkinsCollection
   const skinsData = await SkinsCollection.findOne({});
   if (!skinsData) {
     throw new Error('Skins collection not found');
   }
 
-  // Получаем массив скинов для указанной подколлекции
   const skins = skinsData[validCollections[colId]] || [];
   if (skins.length === 0) {
     throw new Error(`No skins found in ${colId}`);
   }
 
-  // Подсчитываем общий бонус
   let totalBonus = 0;
   for (const index of indexArray) {
     if (index >= skins.length) {
@@ -208,13 +202,11 @@ export const claimSkinsBonusService = async (id, colId, indexArray) => {
     totalBonus += skins[index].skin_bonus || 0;
   }
 
-  // Формируем обновления для скинов (устанавливаем images[index] в false)
   const updateFields = {};
   indexArray.forEach((index) => {
     updateFields[`skinsCollections.$.images.${index}`] = false;
   });
 
-  // Обновляем пользователя: устанавливаем images в false и добавляем токены
   const updatedUser = await UsersCollection.findOneAndUpdate(
     { id, 'skinsCollections.idUserCollection': colId },
     {
